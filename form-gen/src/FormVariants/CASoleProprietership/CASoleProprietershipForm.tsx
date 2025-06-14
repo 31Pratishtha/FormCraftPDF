@@ -4,6 +4,7 @@ import CASoleProprietershipTemplate from './CASoleProprietershipTemplate'
 import { ICASoleProprietership } from '../../interfaces/CASoleProprietership'
 import { usePDFGenerator } from '../../hooks/usePDFGenerator'
 import { useState } from 'react'
+import FormTemplateContainer from '../../components/FormWrapper'
 
 const CASoleProprietershipForm = () => {
 	const methods = useForm<ICASoleProprietership>()
@@ -26,7 +27,9 @@ const CASoleProprietershipForm = () => {
 					Submit
 				</button>
 			</form>
-			<CASoleProprietershipTemplate data={methods.watch()} />
+			<FormTemplateContainer>
+				<CASoleProprietershipTemplate data={methods.watch()} />
+			</FormTemplateContainer>
 		</FormProvider>
 	)
 }

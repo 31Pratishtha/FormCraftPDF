@@ -1,58 +1,88 @@
-import SubHeading from '../../ui/SubHeading'
 import { useFormContext } from 'react-hook-form'
 import { ICASoleProprietership } from '../../interfaces/CASoleProprietership'
-import { TextField, DateField } from '../../ui'
+import { DateField, RadioField, TextField } from '../../ui'
+
+const applicationTypeOptions = [
+	{ value: 'New', label: 'New' },
+	{ value: 'Update', label: 'Update' },
+]
 
 const BasicInfo = () => {
-  const { register, formState: { errors } } = useFormContext<ICASoleProprietership>()
-  
-  return (
-    <div className="space-y-6">
-      <SubHeading 
-        title={'CURRENT ACCOUNT OPENING FORM FOR SOLE PROPRIETORSHIP FIRM'} 
-        className='py-2 font-bold text-lg' 
-      />
-      
-      <div className='bg-white p-6 rounded-lg shadow space-y-4'>
-        <div className="grid grid-cols-2 gap-4">
-          <TextField
-            label="Full Name"
-            {...register('name')}
-          />
-          
-          <TextField
-            label="Email Address"
-            type="email"
-            {...register('email')}
-          />
+	const {
+		register,
+		formState: { errors },
+	} = useFormContext<ICASoleProprietership>()
+
+	return (
+		<div className=''>
+			<div className='bg-white p-6 rounded-lg shadow space-y-4 grid grid-cols-2 gap-4'>
+        {/* Application Type as Checkbox group */}
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-1'>
+            Application Type
+          </label>
+          <div className='flex gap-4'>
+            {applicationTypeOptions.map((opt) => (
+              <RadioField
+                key={opt.value}
+                label={opt.label}
+                value={opt.value}
+                {...register('applicationType')}
+                // For react-hook-form, use value as array of selected
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <TextField
-            label="Phone Number"
-            {...register('phone')}
-          />
-          
-          <TextField
-            label="PAN Number"
-            {...register('panNumber')}
-          />
-        </div>
+        {/* Application Date */}
+        <DateField label='Date' {...register('applicationDate')} />
 
-        <div className="grid grid-cols-2 gap-4">
-          <TextField
-            label="Business Name"
-            {...register('businessName')}
-          />
-          
-          <DateField
-            label="Date of Birth"
-            {...register('dateOfBirth', { valueAsDate: true })}
-          />
-        </div>
-      </div>
-    </div>
-  )
+        <TextField
+          label='CIF No.'
+          type='text'
+          inputMode='numeric'
+          maxLength={11}
+          pattern='\d{11}'
+          placeholder='11 digit number'
+          {...register('cifNo')}
+        />
+
+        <TextField
+          label='Current Acc No.'
+          type='text'
+          inputMode='numeric'
+          maxLength={11}
+          pattern='\d{11}'
+          placeholder='11 digit number'
+          {...register('currentAccNo')}
+        />
+
+        <TextField
+          label='CKYC No.'
+          type='text'
+          maxLength={15}
+          placeholder='15 character string'
+          {...register('ckycNo')}
+        />
+
+        <TextField
+          label='Account Holder Type'
+          type='text'
+          maxLength={2}
+          placeholder='2 character string'
+          {...register('accountHolderType')}
+        />
+
+        <TextField
+          label='US Reportable'
+          type='text'
+          maxLength={2}
+          placeholder='2 character string'
+          {...register('usReportable')}
+        />
+			</div>
+		</div>
+	)
 }
 
 export default BasicInfo

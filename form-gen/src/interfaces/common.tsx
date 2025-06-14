@@ -1,9 +1,11 @@
 export interface IBasicInfo {
-  name: string;
-  email: string;
-  phone: string;
-  dateOfBirth: Date;
-  panNumber: string;
+  applicationType: string[];
+  applicationDate: string;
+  cifNo: string;
+  currentAccNo: string;
+  ckycNo: string;
+  accountHolderType: string;
+  usReportable: string;
 }
 
 export interface IAddress {
